@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Một món quà từ xa... 🧸🌻</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: linear-gradient(135deg, #fff9e6 0%, #ffe0b2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+            color: #4a4a4a;
+        }
+
+        .container {
+            background: #ffffff;
+            width: 100%;
+            max-width: 600px;
+            padding: 40px 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            position: relative;
+            transition: all 0.5s ease;
+            max-height: 90vh; 
+            overflow-y: auto; 
+        }
+
+        .container::-webkit-scrollbar {
+            width: 6px;
+        }
+        .container::-webkit-scrollbar-thumb {
+            background-color: #ffa940;
+            border-radius: 10px;
+        }
+
+        #introScreen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            min-height: 300px; 
+        }
+
+        .icon-gift {
+            font-size: 80px;
+            margin-bottom: 20px;
+            animation: bounce 2s infinite;
+        }
+
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 32px;
+            color: #d48806;
+            margin-bottom: 30px;
+            line-height: 1.4;
+        }
+
+        .btn-open {
+            background-color: #ffa940;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 18px;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 600;
+            border-radius: 25px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 169, 64, 0.4);
+            transition: transform 0.2s, background-color 0.2s;
+            -webkit-tap-highlight-color: transparent; 
+        }
+
+        .btn-open:hover {
+            background-color: #fa8c16;
+            transform: scale(1.05);
+        }
+
+        #letterScreen {
+            display: none;
+            text-align: left;
+            line-height: 1.8;
+            font-size: 17px;
+        }
+
+        .letter-content {
+            min-height: 250px;
+        }
+
+        .signature {
+            margin-top: 20px;
+            font-weight: 600;
+            color: #d48806;
+            text-align: right;
+            opacity: 0;
+            transition: opacity 1s ease-in;
+        }
+
+        #videoSection {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px dashed #ffa940;
+            text-align: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 1.5s ease-in;
+        }
+
+        #videoSection p {
+            font-weight: 600;
+            color: #d48806;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; 
+            height: 0;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 12px;
+        }
+
+        @media (max-width: 480px) {
+            body { padding: 15px; }
+            .container {
+                padding: 30px 20px; 
+                max-height: 95vh; 
+            }
+            .icon-gift { font-size: 65px; }
+            h1 {
+                font-size: 26px; 
+                margin-bottom: 25px;
+            }
+            .btn-open {
+                padding: 12px 25px;
+                font-size: 16px;
+            }
+            #letterScreen {
+                font-size: 15.5px; 
+                line-height: 1.7;
+            }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-20px);}
+            60% {transform: translateY(-10px);}
+        }
+
+        .fade-out { animation: fadeOut 0.8s forwards; }
+        .fade-in { animation: fadeIn 1s forwards; }
+
+        @keyframes fadeOut { to { opacity: 0; visibility: hidden; } }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="bgMusic" loop preload="auto">
+        <source src="nhac_nen.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="container" id="mainContainer">
+        <div id="introScreen">
+            <div class="icon-gift">💌🌻</div>
+            <h1>Có một món quà nhỏ gửi từ xa...</h1>
+            <button class="btn-open" onclick="openLetter()">Mở Thư</button>
+        </div>
+
+        <div id="letterScreen">
+            <div class="letter-content" id="typewriterText"></div>
+            <div class="signature" id="signatureBox">
+                <br>
+                Tuấn Dũng
+            </div>
+            
+            <div id="videoSection">
+                <p>🎬 Chút hậu trường mình làm bông hoa này tặng bạn nè 👇</p>
+                <div class="video-container">
+                    <iframe id="myVideoFrame" src="https://drive.google.com/file/d/1_kOTrspTVf5VUy80PXzxjjGv9l_lOBW8/preview" allow="autoplay" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // NHỚ THAY [Tên bạn ấy] vào dòng dưới nhé!
+        const letterLines = [
+            "Gửi [Thùy Đan Cute] 🌻,<br><br>",
+            "Dạo này công việc vất vả, thấy bạn hay mệt mỏi mà mình lại ở xa, chẳng thể làm gì nhiều hơn là gửi chú gấu nhỏ này mang theo đóa hướng dương tự tay làm đến bên bạn 🧸🌻.<br><br>",
+            "Bạn biết không, mình chọn làm hoa hướng dương là vì một ý nghĩa rất đặc biệt ✨. Dù xung quanh có ra sao, hoa hướng dương cũng luôn kiên định vươn mình, hướng về phía ánh nắng rực rỡ nhất ☀️.<br><br>",
+            "Mình mong rằng, dù tâm trạng của bạn có đang như thế nào, dù những ngày qua có áp lực đến đâu, bạn cũng sẽ giống như loài hoa ấy. Mong bạn luôn giữ được tinh thần lạc quan, luôn vui vẻ và nở nụ cười rạng rỡ y như đóa hướng dương tắm mình dưới ánh mặt trời 🥰.<br><br>",
+            "Hãy để chú gấu này thay mình ở cạnh, mang lại cho bạn chút bình yên và năng lượng tích cực mỗi ngày nhé 🐻💖. Mọi mệt mỏi rồi sẽ qua nhanh thôi, bạn vất vả rồi! 🍀"
+        ];
+
+        let currentLine = 0;
+        let currentChar = 0;
+        const speed = 40; 
+        const textContainer = document.getElementById("typewriterText");
+        const bgMusic = document.getElementById("bgMusic");
+        
+        function openLetter() {
+            const intro = document.getElementById("introScreen");
+            const letter = document.getElementById("letterScreen");
+            
+            // Phát nhạc nền
+            bgMusic.volume = 0.5; 
+            bgMusic.play().catch(error => console.log("Trình duyệt chặn autoplay nhạc"));
+
+            intro.classList.add("fade-out");
+            
+            setTimeout(() => {
+                intro.style.display = "none";
+                letter.style.display = "block";
+                letter.classList.add("fade-in");
+                
+                setTimeout(typeWriter, 500);
+            }, 800);
+        }
+
+        function typeWriter() {
+            if (currentLine < letterLines.length) {
+                let text = letterLines[currentLine];
+                
+                if (text.substring(currentChar, currentChar + 4) === "<br>") {
+                    textContainer.innerHTML += "<br>";
+                    currentChar += 4;
+                } else {
+                    const charArray = Array.from(text);
+                    textContainer.innerHTML += charArray[currentChar];
+                    currentChar++;
+                }
+
+                document.getElementById('mainContainer').scrollTop = document.getElementById('mainContainer').scrollHeight;
+
+                const charArray = Array.from(text);
+                if (currentChar < charArray.length) {
+                    setTimeout(typeWriter, speed);
+                } else {
+                    currentLine++;
+                    currentChar = 0;
+                    setTimeout(typeWriter, speed);
+                }
+            } else {
+                document.getElementById("signatureBox").style.opacity = 1;
+                
+                setTimeout(() => {
+                    const videoSec = document.getElementById("videoSection");
+                    videoSec.style.visibility = "visible";
+                    videoSec.style.opacity = 1;
+                    
+                    setTimeout(() => {
+                        document.getElementById('mainContainer').scrollTo({
+                            top: document.getElementById('mainContainer').scrollHeight,
+                            behavior: 'smooth'
+                        });
+                    }, 500);
+                }, 1500);
+            }
+        }
+
+        // Tự động tắt nhạc nền khi click vào video
+        window.addEventListener('blur', function() {
+            const iframe = document.getElementById('myVideoFrame');
+            if (document.activeElement === iframe) {
+                bgMusic.pause(); 
+            }
+        });
+    </script>
+
+</body>
+</html>

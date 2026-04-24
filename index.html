@@ -15,12 +15,12 @@
         body {
             font-family: 'Quicksand', sans-serif;
             background: linear-gradient(135deg, #fff9e6 0%, #ffe0b2 100%);
+            background-attachment: fixed; 
             min-height: 100vh;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
-            padding: 20px;
-            overflow-x: hidden;
+            padding: 40px 20px;
             color: #4a4a4a;
         }
 
@@ -33,17 +33,48 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             text-align: center;
             position: relative;
-            transition: all 0.5s ease;
-            max-height: 90vh; 
-            overflow-y: auto; 
         }
 
-        .container::-webkit-scrollbar {
-            width: 6px;
+        .video-box {
+            background: #ffffff;
+            width: 100%;
+            max-width: 600px;
+            padding: 25px 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin-top: 25px; 
+            display: none; 
+            opacity: 0;
+            transition: opacity 1s ease-in;
         }
-        .container::-webkit-scrollbar-thumb {
-            background-color: #ffa940;
-            border-radius: 10px;
+
+        .video-box p {
+            font-weight: 600;
+            color: #d48806;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        /* KHUNG CHỨA YOUTUBE CHUẨN RESPONSIVE */
+        .video-responsive-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* Tỷ lệ 16:9 của Youtube */
+            height: 0;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            background-color: #000;
+        }
+
+        .video-responsive-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
         }
 
         #introScreen {
@@ -51,7 +82,6 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100%;
             min-height: 300px; 
         }
 
@@ -97,7 +127,7 @@
         }
 
         .letter-content {
-            min-height: 250px;
+            min-height: 150px;
         }
 
         .signature {
@@ -109,63 +139,14 @@
             transition: opacity 1s ease-in;
         }
 
-        #videoSection {
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px dashed #ffa940;
-            text-align: center;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 1.5s ease-in;
-        }
-
-        #videoSection p {
-            font-weight: 600;
-            color: #d48806;
-            margin-bottom: 15px;
-            font-size: 16px;
-        }
-
-        /* ĐÃ SỬA: Tối ưu iframe cho Google Drive để không bị viền đen */
-        .video-container {
-            width: 100%;
-            aspect-ratio: 16 / 9; /* Tỷ lệ khung hình chuẩn ngang */
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            background-color: #000;
-            position: relative;
-        }
-
-        .video-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
-            display: block;
-        }
-
         @media (max-width: 480px) {
-            body { padding: 15px; }
-            .container {
-                padding: 30px 20px; 
-                max-height: 95vh; 
-            }
+            body { padding: 20px 15px; }
+            .container { padding: 30px 20px; }
+            .video-box { padding: 20px 15px; } 
             .icon-gift { font-size: 65px; }
-            h1 {
-                font-size: 26px; 
-                margin-bottom: 25px;
-            }
-            .btn-open {
-                padding: 12px 25px;
-                font-size: 16px;
-            }
-            #letterScreen {
-                font-size: 15.5px; 
-                line-height: 1.7;
-            }
+            h1 { font-size: 26px; margin-bottom: 25px; }
+            .btn-open { padding: 12px 25px; font-size: 16px; }
+            #letterScreen { font-size: 15.5px; line-height: 1.7; }
         }
 
         @keyframes bounce {
@@ -186,10 +167,6 @@
 </head>
 <body>
 
-    <audio id="bgMusic" loop preload="auto">
-        <source src="nhac_nen.mp3" type="audio/mpeg">
-    </audio>
-
     <div class="container" id="mainContainer">
         <div id="introScreen">
             <div class="icon-gift">💌🌻</div>
@@ -203,21 +180,21 @@
                 <br>
                 Tuấn Dũng
             </div>
-            
-            <div id="videoSection">
-                <p>🎬 Chút hậu trường mình làm bông hoa này tặng bạn nè 👇</p>
-                <div class="video-container">
-                    <iframe id="myVideoFrame" src="https://drive.google.com/file/d/1_kOTrspTVf5VUy80PXzxjjGv9l_lOBW8/preview" allow="autoplay" allowfullscreen></iframe>
-                </div>
-            </div>
+        </div>
+    </div>
+
+    <div class="video-box" id="videoContainerBox">
+        <p>🎬 Chút hậu trường mình làm bông hoa này tặng bạn nè 👇</p>
+        
+        <div class="video-responsive-container">
+            <iframe src="https://www.youtube.com/embed/IbtB-9Ht0ZM?rel=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
         </div>
     </div>
 
     <script>
-        // ĐÃ SỬA: Lỗi chính tả "mìnhgit add ."
         const letterLines = [
             "Gửi Thùy Đan Cute 🌻,<br><br>",
-            "Dạo này công việc vất vả, thấy bạn hay mệt mỏi mà mình lại ở xa, chẳng thể làm gì nhiều hơn là gửi chú gấu nhỏ này mang theo đóa hướng dương tự tay làm đến bên bạn 🧸🌻.<br><br>",
+            "Dạo này công việc vất vả, thấy bạn hay mệt mỏi mà mình lại ở xa, chẳng thể làm gì nhiều hơn, mình gửi chú gấu nhỏ này mang theo đóa hướng dương tự tay làm đến bên bạn 🧸🌻.<br><br>",
             "Mình tự tay làm đóa hoa này vì rất trân trọng ý nghĩa của nó ✨. Dù xung quanh có ra sao, hoa hướng dương cũng luôn kiên định vươn mình, hướng về phía ánh nắng rực rỡ nhất ☀️.<br><br>",
             "Bông hoa này có thể không rực rỡ như hoa thật, nhưng nó sẽ không bao giờ tàn. Mình hy vọng nó sẽ thay mình gửi đến bạn lời chúc luôn vui vẻ và tự tin. Dù có chuyện gì xảy ra, mong bạn vẫn luôn giữ được nụ cười tỏa sáng như đóa hướng dương này nhé 🥰.<br><br>"
         ];
@@ -226,15 +203,10 @@
         let currentChar = 0;
         const speed = 40; 
         const textContainer = document.getElementById("typewriterText");
-        const bgMusic = document.getElementById("bgMusic");
         
         function openLetter() {
             const intro = document.getElementById("introScreen");
             const letter = document.getElementById("letterScreen");
-            
-            // Phát nhạc nền
-            bgMusic.volume = 0.5; 
-            bgMusic.play().catch(error => console.log("Trình duyệt chặn autoplay nhạc"));
 
             intro.classList.add("fade-out");
             
@@ -247,13 +219,11 @@
             }, 800);
         }
 
-        // ĐÃ SỬA: Viết lại thuật toán tách ký tự thông minh để không bị đứt đoạn do Emoji
         function typeWriter() {
             if (currentLine < letterLines.length) {
                 let text = letterLines[currentLine];
                 
                 if (currentChar < text.length) {
-                    // Nếu gặp thẻ HTML (như <br>), gõ luôn nguyên cụm thẻ
                     if (text.charAt(currentChar) === '<') {
                         let tagEnd = text.indexOf('>', currentChar);
                         if (tagEnd !== -1) {
@@ -261,14 +231,13 @@
                             currentChar = tagEnd + 1;
                         }
                     } else {
-                        // Nếu là ký tự / emoji, lấy chuẩn độ dài byte của nó
                         let cp = text.codePointAt(currentChar);
                         let char = String.fromCodePoint(cp);
                         textContainer.innerHTML += char;
                         currentChar += char.length; 
                     }
 
-                    document.getElementById('mainContainer').scrollTop = document.getElementById('mainContainer').scrollHeight;
+                    window.scrollTo(0, document.body.scrollHeight);
                     setTimeout(typeWriter, speed);
                 } else {
                     currentLine++;
@@ -279,28 +248,20 @@
                 document.getElementById("signatureBox").style.opacity = 1;
                 
                 setTimeout(() => {
-                    const videoSec = document.getElementById("videoSection");
-                    videoSec.style.visibility = "visible";
-                    videoSec.style.opacity = 1;
+                    const videoBox = document.getElementById("videoContainerBox");
+                    videoBox.style.display = "block"; 
                     
                     setTimeout(() => {
-                        document.getElementById('mainContainer').scrollTo({
-                            top: document.getElementById('mainContainer').scrollHeight,
-                            behavior: 'smooth'
-                        });
-                    }, 500);
+                        videoBox.style.opacity = 1; 
+                        
+                        setTimeout(() => {
+                            videoBox.scrollIntoView({ behavior: 'smooth', block: 'end' });
+                        }, 300);
+                    }, 50);
                 }, 1500);
             }
         }
-
-        // Tự động tắt nhạc nền khi click vào video
-        window.addEventListener('blur', function() {
-            const iframe = document.getElementById('myVideoFrame');
-            if (document.activeElement === iframe) {
-                bgMusic.pause(); 
-            }
-        });
     </script>
 
 </body>
-</html>
+</html>git add .

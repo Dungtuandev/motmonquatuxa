@@ -126,13 +126,15 @@
             font-size: 16px;
         }
 
+        /* ĐÃ SỬA: Tối ưu iframe cho Google Drive để không bị viền đen */
         .video-container {
-            position: relative;
-            padding-bottom: 56.25%; 
-            height: 0;
-            overflow: hidden;
+            width: 100%;
+            aspect-ratio: 16 / 9; /* Tỷ lệ khung hình chuẩn ngang */
             border-radius: 12px;
+            overflow: hidden;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            background-color: #000;
+            position: relative;
         }
 
         .video-container iframe {
@@ -142,7 +144,7 @@
             width: 100%;
             height: 100%;
             border: none;
-            border-radius: 12px;
+            display: block;
         }
 
         @media (max-width: 480px) {
@@ -212,12 +214,12 @@
     </div>
 
     <script>
-        // NHỚ THAY [Tên bạn ấy] vào dòng dưới nhé!
+        // ĐÃ SỬA: Lỗi chính tả "mìnhgit add ."
         const letterLines = [
-            "Gửi [Thùy Đan Cute] 🌻,<br><br>",
-            "Dạo này công việc vất vả, thấy bạn hay mệt mỏi mà mình lại ở xa, chẳng thể làm gì nhiều hơn, mìnhgit add . gửi chú gấu nhỏ này mang theo đóa hướng dương tự tay làm đến bên bạn 🧸🌻.<br><br>",
+            "Gửi Thùy Đan Cute 🌻,<br><br>",
+            "Dạo này công việc vất vả, thấy bạn hay mệt mỏi mà mình lại ở xa, chẳng thể làm gì nhiều hơn là gửi chú gấu nhỏ này mang theo đóa hướng dương tự tay làm đến bên bạn 🧸🌻.<br><br>",
             "Mình tự tay làm đóa hoa này vì rất trân trọng ý nghĩa của nó ✨. Dù xung quanh có ra sao, hoa hướng dương cũng luôn kiên định vươn mình, hướng về phía ánh nắng rực rỡ nhất ☀️.<br><br>",
-            "Bông hoa này có thể không rực rỡ như hoa thật, nhưng nó sẽ không bao giờ tàn. Mình hy vọng nó sẽ thay mình gửi đến bạn lời chúc luôn vui vẻ và tự tin. Dù có chuyện gì xảy ra, mong bạn vẫn luôn giữ được nụ cười tỏa sáng như đóa hướng dương này nhé. 🥰.<br><br>",
+            "Bông hoa này có thể không rực rỡ như hoa thật, nhưng nó sẽ không bao giờ tàn. Mình hy vọng nó sẽ thay mình gửi đến bạn lời chúc luôn vui vẻ và tự tin. Dù có chuyện gì xảy ra, mong bạn vẫn luôn giữ được nụ cười tỏa sáng như đóa hướng dương này nhé 🥰.<br><br>"
         ];
 
         let currentLine = 0;
@@ -245,23 +247,28 @@
             }, 800);
         }
 
+        // ĐÃ SỬA: Viết lại thuật toán tách ký tự thông minh để không bị đứt đoạn do Emoji
         function typeWriter() {
             if (currentLine < letterLines.length) {
                 let text = letterLines[currentLine];
                 
-                if (text.substring(currentChar, currentChar + 4) === "<br>") {
-                    textContainer.innerHTML += "<br>";
-                    currentChar += 4;
-                } else {
-                    const charArray = Array.from(text);
-                    textContainer.innerHTML += charArray[currentChar];
-                    currentChar++;
-                }
+                if (currentChar < text.length) {
+                    // Nếu gặp thẻ HTML (như <br>), gõ luôn nguyên cụm thẻ
+                    if (text.charAt(currentChar) === '<') {
+                        let tagEnd = text.indexOf('>', currentChar);
+                        if (tagEnd !== -1) {
+                            textContainer.innerHTML += text.substring(currentChar, tagEnd + 1);
+                            currentChar = tagEnd + 1;
+                        }
+                    } else {
+                        // Nếu là ký tự / emoji, lấy chuẩn độ dài byte của nó
+                        let cp = text.codePointAt(currentChar);
+                        let char = String.fromCodePoint(cp);
+                        textContainer.innerHTML += char;
+                        currentChar += char.length; 
+                    }
 
-                document.getElementById('mainContainer').scrollTop = document.getElementById('mainContainer').scrollHeight;
-
-                const charArray = Array.from(text);
-                if (currentChar < charArray.length) {
+                    document.getElementById('mainContainer').scrollTop = document.getElementById('mainContainer').scrollHeight;
                     setTimeout(typeWriter, speed);
                 } else {
                     currentLine++;

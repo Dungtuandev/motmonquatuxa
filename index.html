@@ -56,11 +56,10 @@
             font-size: 16px;
         }
 
-        /* KHUNG CHỨA YOUTUBE CHUẨN RESPONSIVE */
         .video-responsive-container {
             position: relative;
             width: 100%;
-            padding-bottom: 56.25%; /* Tỷ lệ 16:9 của Youtube */
+            padding-bottom: 56.25%; 
             height: 0;
             overflow: hidden;
             border-radius: 12px;
@@ -130,13 +129,36 @@
             min-height: 150px;
         }
 
+        /* KHUNG CHỮ KÝ ĐƯỢC LÀM MỚI ĐỂ CHỨA ẢNH */
         .signature {
-            margin-top: 20px;
-            font-weight: 600;
-            color: #d48806;
+            margin-top: 30px;
             text-align: right;
             opacity: 0;
-            transition: opacity 1s ease-in;
+            transition: opacity 1.5s ease-in;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end; /* Ép mọi thứ dạt sang lề phải */
+        }
+
+        .signature p {
+            font-style: italic;
+            color: #d48806;
+            margin-bottom: 5px;
+        }
+
+        /* Tùy chỉnh ảnh chữ ký */
+        .signature img {
+            max-width: 150px; /* Giới hạn độ lớn chữ ký để không bị thô */
+            height: auto;
+            margin-bottom: 5px;
+            /* Nếu ảnh của bạn bị mờ, có thể thêm filter: contrast(1.2); vào đây */
+        }
+
+        .signature h3 {
+            font-family: 'Dancing Script', cursive; /* Tên dùng font cách điệu cho nghệ thuật */
+            font-size: 26px;
+            color: #d48806;
+            font-weight: 600;
         }
 
         @media (max-width: 480px) {
@@ -176,9 +198,11 @@
 
         <div id="letterScreen">
             <div class="letter-content" id="typewriterText"></div>
+            
             <div class="signature" id="signatureBox">
-                <br>
-                Tuấn Dũng
+                <p>Thân gửi,</p>
+                <img src="chu_ky.png" alt="Chữ ký">
+                <h3>Nguyễn Tuấn Dũng</h3>
             </div>
         </div>
     </div>
@@ -196,7 +220,7 @@
     "Gửi bạn Đan cute 🌻,<br><br>",
     "Cho mình xin lũi cậu nhiều nha vì không tặng quà trực tiếp cho cậu dc😢. Cho mình xin phép bạn gấu bông này được thay mình gửi bông hoa này tới cậu nha😊<br><br>",
     "Bông hoa này là tự tay mình làm tặng cậu, tuy rằng nó không được đẹp hay rực rỡ giống hoa thật, nhưng cũng là tất cả tấm lòng mình muốn gửi tặng cho cậu😸<br><br>",
-    "Mình mong cậu lúc nào cũng giống như loài hoa này nha, dù có mệt mỏi hay áp lực thì vẫn luôn rạng rỡ và hướng về những điều tích cực ☀️.<br><br>",
+    "Mình mong cậu lúc nào cũng giống như bông hoa này nha, dù có mệt mỏi hay áp lực thì vẫn luôn rạng rỡ và hướng về những điều tích cực nhé ☀️.<br><br>",
     "Hoa này không bao giờ héo nên mong nụ cười của cậu cũng thế nha. Giữ gìn sức khỏe và lúc nào cũng vui vẻ nhé! 🍀"
 ];
 
